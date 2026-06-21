@@ -9,10 +9,20 @@ class Controller:
         self._model = model
 
     def fillDDGenre(self):
-        pass
+        generi = self._model.get_all_generi()  # 👈 CAMBIA: metodo del Model
+        for g in generi:
+            self._view._ddGenre.options.append(  # 👈 CAMBIA: nome dropdown
+                ft.dropdown.Option(key=g, text=g)
+            )
+        self._view.update_page()
 
     def handleCreaGrafo(self, e):
-        pass
+        self._model.buildGrafo(self._view._ddGenre.value)
+        self._view.txt_result.controls.clear()
+        self._view.txt_result.controls.append(ft.Text("Grafo correttamente creato."))
+        self._view.txt_result.controls.append(ft.Text(f"Il grafo è costituito da {self._model.get_numnodi()} nodi."))
+        self._view.txt_result.controls.append(ft.Text(f"Il grafo è costituito da {self._model.get_numarchi()} archi."))
+        self._view.update_page()
 
     def handleCreaGrafo(self,e):
         pass
