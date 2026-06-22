@@ -17,7 +17,6 @@ class Controller:
         self._view.update_page()
 
 
-
     def handleCreaGrafo(self,e):
         pass
 
