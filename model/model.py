@@ -43,3 +43,25 @@ class Model:
         return len(self._grafo.nodes())
     def get_numarchi(self):
         return len(self._grafo.edges())
+
+    def get_artista_piu_influente(self):
+        if len(self._grafo.nodes()) == 0:
+            return None, 0
+        best = None
+        best_infl = None
+        for n in self._grafo.nodes():
+            # influenza = peso archi USCENTI − peso archi ENTRANTI
+            usciti = self._grafo.out_degree(n, weight="weight")
+            entrati = self._grafo.in_degree(n, weight="weight")
+            infl = usciti - entrati
+            if best_infl is None or infl > best_infl:
+                best_infl = infl
+                best = n
+        return best, best_infl
+
+    def get_top5_archi(self):
+        archi = []
+        for u, v, data in self._grafo.edges(data=True):
+            archi.append((u, v, data["weight"]))
+        archi.sort(key=lambda x: x[2], reverse=True)  # ordine decrescente per peso
+        return archi[:5]
