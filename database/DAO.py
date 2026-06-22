@@ -43,7 +43,7 @@ class DAO():
         return result
 
     @staticmethod
-    def getAllEdges():
+    def getAllEdges(e):
         conn = DBConnect.get_connection()
 
         result = []
@@ -66,7 +66,7 @@ class DAO():
                        AND al2.ArtistId IN (SELECT DISTINCT aly.ArtistId
                        FROM album aly, track ty
                        WHERE aly.AlbumId = ty.AlbumId AND ty.GenreId = %s)"""
-        cursor.execute(query)
+        cursor.execute(query,(e,e))
 
         for row in cursor:
             result.append((row["a1"], row["a2"]))
